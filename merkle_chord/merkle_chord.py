@@ -24,22 +24,21 @@ import time
 from numpy import array, pi, sin, arange
 import numpy as np
 
-DEFAULT_SECONDS = 2
+DEFAULT_SECONDS = 8
 DEFAULT_FREQUENCY = 440.0
 DEFAULT_DELAY = 0
 
 def locate_freq_from_hash(hash):
     """ this function takes a hash value of any length and computes the 
     frequency of a random note in the hardcoded scale """
-    A_HARMONIC_MINOR = {"C":16.35,
-                        "D":18.35,
+    Pentacorde       = {"C":16.35,
+                        "C#":17.32,
                         "E":20.60,
-                        "F":21.83,
-                        "G#": 25.96,
-                        "A": 27.50,
-                        "B": 30.87
+                        "A":27.50,
+                        "G#": 25.96,      
+                        "D": 36.71
                         }
-    NOTE_KEYS = A_HARMONIC_MINOR.keys()
+    NOTE_KEYS = Pentacorde.keys()
 
     # we choose between 8 octaves, take the MSNibble to select the octave.
     octave = (int(hash[0].encode('hex'), 16) >> 6) + 2
@@ -53,7 +52,7 @@ def locate_freq_from_hash(hash):
     crc = crc % len(NOTE_KEYS)
 
     # obtain the base frequency 
-    note_frequency = A_HARMONIC_MINOR[NOTE_KEYS[crc]] * octave_multiplier;
+    note_frequency = Pentacorde[NOTE_KEYS[crc]] * octave_multiplier;
     return note_frequency
 
 def compute_frequencies_for_tree_level(hash_nodes):
@@ -103,7 +102,7 @@ def compute_tree_level(round_hashes):
 def the_soothing_sound_of_hash_collisions():
 
     # it's a 3 minute song
-    SECONDS_PER_FRAME = 4
+    SECONDS_PER_FRAME = 8
     TREE_SIZE = 256
 
     frames = []
